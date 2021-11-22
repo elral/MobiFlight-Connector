@@ -534,7 +534,7 @@ namespace MobiFlight
             String name = arguments.ReadStringArg();
             String value1 = arguments.ReadStringArg();
             String value2 = arguments.ReadStringArg();
-            Log.Instance.log("FW Debug -> " + name + value1 + value2, LogSeverity.Debug);
+            Log.Instance.log("FW Debug -> " + name + " - " + value1 + " - " + value2, LogSeverity.Debug);
         }
 
         /// <summary>
