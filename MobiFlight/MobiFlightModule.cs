@@ -181,7 +181,7 @@ namespace MobiFlight
             }
         }
 
-        public const int CommandTimeout = 2000;
+        public const int CommandTimeout = 2500;
         
         const int KeepAliveIntervalInMinutes = 5; // 5 Minutes
         DateTime lastUpdate = new DateTime();
@@ -787,6 +787,8 @@ namespace MobiFlight
                     command = new SendCommand((int)MobiFlightModule.Command.ActivateConfig, (int)MobiFlightModule.Command.ConfigActivated, CommandTimeout);
                     StatusCommand = _cmdMessenger.SendCommand(command);
                     isOk = StatusCommand.Ok;
+                    if (isOk) Log.Instance.log("Config activated.", LogSeverity.Debug);
+                    else Log.Instance.log("Config NOT activated SUCCESSFULLY.", LogSeverity.Debug);
                 }
                 else
                 {
