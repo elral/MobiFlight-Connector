@@ -1227,10 +1227,10 @@ namespace MobiFlight.UI
 
         private void SetTitle(string title)
         {
-            string NewTitle = "MobiFlight Connector with ProMini/Teensy/BluePill and RaspiPico support (" + Version + ")";
+            string NewTitle = "MobiFlight Connector with Teensy and RaspiPico support (" + Version + ")";
             if (VersionBeta.Split('.')[3] != "0")
             {
-                NewTitle = "MobiFlight Connector with ProMini/Teensy/BluePill and RaspiPico support BETA (" + VersionBeta + ")";
+                NewTitle = "MobiFlight Connector with Teensy and RaspiPico support BETA (" + VersionBeta + ")";
             }
             if (title!=null && title!="")
             {
