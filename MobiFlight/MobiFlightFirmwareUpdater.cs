@@ -79,7 +79,7 @@ namespace MobiFlight
                 FirmwareName = FirmwareName.Replace("hex", "elf");
             } else if (board.Info.MobiFlightType == "MobiFlight BluePill")
             {
-                FirmwareName = FirmwareName.Replace("hex", "elf");
+                FirmwareName = FirmwareName.Replace("hex", "bin");
             }
             String ArduinoChip = board.AvrDudeSettings.Device;
             String Bytes = board.AvrDudeSettings.BaudRate;
@@ -108,20 +108,23 @@ namespace MobiFlight
                 proc1.FileName = "\"" + FullRaspiPicoUpdatePath + "\\rp2040load.exe" + "\"";
                 proc1.Arguments = anyCommand;
                 //proc1.WindowStyle = ProcessWindowStyle.Hidden;
-                Log.Instance.log("RunRaspberryPicoUpdater : " + proc1.FileName, LogSeverity.Info);
-                Log.Instance.log("RunRaspberryPicoUpdater : " + anyCommand, LogSeverity.Info);
+                Log.Instance.log("RunRaspberryPicoUpdater : " + proc1.FileName, LogSeverity.Debug);
+                Log.Instance.log("RunRaspberryPicoUpdater : " + anyCommand, LogSeverity.Debug);
             }
             else if (board.Info.MobiFlightType == "MobiFlight Teensy35" || board.Info.MobiFlightType == "MobiFlight Teensy41")
             {
+                // teensy_post_compile -file=mobiflight_teensy35_0_0_1 -path="C:\_PlatformIO\MobiFlight-FirmwareSource\.pio\build\teensy35" -tools=C:\Users\ralfk\.platformio\packages\tool-teensy -board=TEENSY35 -reboot
                 String FullTeensyUpdatePath = Directory.GetCurrentDirectory() + "\\Teensy\\tools";
                 anyCommand = verboseLevel + "-file=" + FirmwareName + " -path=" + "\"" + FirmwarePath + "\"" + " -tools=" + FullTeensyUpdatePath + " -board=" + ArduinoChip + " -reboot";
+                //anyCommand = verboseLevel + "-file=" + FirmwareName + " -path=" + FirmwarePath + " -tools=" + FullTeensyUpdatePath + " -board=" + ArduinoChip + " -reboot";
                 proc1.WorkingDirectory = FullTeensyUpdatePath;
                 proc1.FileName = "\"" + FullTeensyUpdatePath + "\\teensy_post_compile.exe" + "\"";
                 proc1.Arguments = anyCommand;
                 //proc1.WindowStyle = ProcessWindowStyle.Hidden;
-                Log.Instance.log("RunTeensyUpdater : " + proc1.FileName, LogSeverity.Info);
-                Log.Instance.log("RunTeensyUpdater : " + anyCommand, LogSeverity.Info);
-            } else if (board.Info.MobiFlightType == "MobiFlight BluePill")
+                Log.Instance.log("RunTeensyUpdater : " + proc1.FileName, LogSeverity.Debug);
+                Log.Instance.log("RunTeensyUpdater : " + anyCommand, LogSeverity.Debug);
+            }
+            else if (board.Info.MobiFlightType == "MobiFlight BluePill")
             {
                 // maple_upload COM33 2 1EAF:0003 "C:\_PlatformIO\MobiFlight-Firmware\.pio\build\bluepill\firmware.bin"
                 String FullBluePillUpdatePath = Directory.GetCurrentDirectory() + "\\STM32duino\\tools";
@@ -130,11 +133,12 @@ namespace MobiFlight
                 proc1.FileName = "\"" + FullBluePillUpdatePath + "\\cmd.exe" + "\"";
                 proc1.Arguments = anyCommand;
                 //    proc1.WindowStyle = ProcessWindowStyle.Hidden;
-                Log.Instance.log("RunBluePillUpdater : " + proc1.FileName, LogSeverity.Info);
-                Log.Instance.log("RunBluePillUpdater : " + anyCommand, LogSeverity.Info);
+                Log.Instance.log("RunBluePillUpdater : " + proc1.FileName, LogSeverity.Debug);
+                Log.Instance.log("RunBluePillUpdater : " + anyCommand, LogSeverity.Debug);
 
                 return;              // Flash Commands to be added
-            } else
+            }
+            else
             {
                 String FullAvrDudePath = $@"{ArduinoIdePath}\{AvrPath}";
 
@@ -148,6 +152,7 @@ namespace MobiFlight
                 Log.Instance.log("RunAvrDude : " + proc1.FileName, LogSeverity.Debug);
                 Log.Instance.log("RunAvrDude : " + anyCommand, LogSeverity.Debug);
             }
+
             Process p = Process.Start(proc1);
             if (p.WaitForExit(board.AvrDudeSettings.Timeout))
             {
@@ -157,7 +162,8 @@ namespace MobiFlight
                 
                 // process terminated but with an error.
                 message = $"ExitCode: {p.ExitCode} => Something went wrong when flashing with command \n {proc1.FileName} {anyCommand}";
-            } else
+            }
+            else
             {
                 // we timed out;
                 p.Kill();
