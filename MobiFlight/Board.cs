@@ -43,7 +43,7 @@ namespace MobiFlight
         /// <returns>The firmware file name using FirmwareBaseName and the specified firmware version.</returns>
         public string GetFirmwareName(string latestFirmwareVersion)
         {
-            return $"{FirmwareBaseName}_{latestFirmwareVersion.Replace('.', '_')}.hex";
+            return $"{FirmwareBaseName}_{latestFirmwareVersion.Replace('.', '_')}";
         }
     }
 

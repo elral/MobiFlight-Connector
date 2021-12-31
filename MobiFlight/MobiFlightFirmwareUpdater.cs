@@ -38,16 +38,16 @@ namespace MobiFlight
             String Port = module.InitUploadAndReturnUploadPort();
             if (module.Connected) module.Disconnect();
 
-            if (!(module.Board.Info.MobiFlightType == "MobiFlight RaspiPico"))
+            if (module.Board.Info.MobiFlightType == "MobiFlight RaspiPico")
+            {
+                System.Threading.Thread.Sleep(500);                         // wait for Bootloader to be ready for RaspiPico
+            }
+            else
             {
                 while (!SerialPort.GetPortNames().Contains(Port))           // Don't do this for Raspberry Pico!! COM Port changes while in Bootloader and needs more time!
                 {
                     System.Threading.Thread.Sleep(100);
                 }
-            }
-            else
-            {
-                System.Threading.Thread.Sleep(500);                         // wait for Bootloader to be ready for RaspiPico
             }
 
 
@@ -76,10 +76,14 @@ namespace MobiFlight
             String FirmwareName = board.AvrDudeSettings.GetFirmwareName(board.Info.LatestFirmwareVersion);
             if (board.Info.MobiFlightType == "MobiFlight RaspiPico")
             {
-                FirmwareName = FirmwareName.Replace("hex", "elf");
-            } else if (board.Info.MobiFlightType == "MobiFlight BluePill")
+                FirmwareName = FirmwareName + ".elf";
+            }
+              else if (board.Info.MobiFlightType == "MobiFlight BluePill")
             {
-                FirmwareName = FirmwareName.Replace("hex", "bin");
+                FirmwareName = FirmwareName + ".bin";
+            } else
+            {
+                FirmwareName = FirmwareName + ".hex";
             }
             String ArduinoChip = board.AvrDudeSettings.Device;
             String Bytes = board.AvrDudeSettings.BaudRate;
@@ -107,20 +111,19 @@ namespace MobiFlight
                 proc1.WorkingDirectory = FullRaspiPicoUpdatePath;
                 proc1.FileName = "\"" + FullRaspiPicoUpdatePath + "\\rp2040load.exe" + "\"";
                 proc1.Arguments = anyCommand;
-                //proc1.WindowStyle = ProcessWindowStyle.Hidden;
+                proc1.WindowStyle = ProcessWindowStyle.Hidden;
                 Log.Instance.log("RunRaspberryPicoUpdater : " + proc1.FileName, LogSeverity.Debug);
                 Log.Instance.log("RunRaspberryPicoUpdater : " + anyCommand, LogSeverity.Debug);
             }
             else if (board.Info.MobiFlightType == "MobiFlight Teensy35" || board.Info.MobiFlightType == "MobiFlight Teensy41")
             {
-                // teensy_post_compile -file=mobiflight_teensy35_0_0_1 -path="C:\_PlatformIO\MobiFlight-FirmwareSource\.pio\build\teensy35" -tools=C:\Users\ralfk\.platformio\packages\tool-teensy -board=TEENSY35 -reboot
+                FirmwareName = FirmwareName.Replace(".hex", "");
                 String FullTeensyUpdatePath = Directory.GetCurrentDirectory() + "\\Teensy\\tools";
                 anyCommand = verboseLevel + "-file=" + FirmwareName + " -path=" + "\"" + FirmwarePath + "\"" + " -tools=" + FullTeensyUpdatePath + " -board=" + ArduinoChip + " -reboot";
-                //anyCommand = verboseLevel + "-file=" + FirmwareName + " -path=" + FirmwarePath + " -tools=" + FullTeensyUpdatePath + " -board=" + ArduinoChip + " -reboot";
                 proc1.WorkingDirectory = FullTeensyUpdatePath;
                 proc1.FileName = "\"" + FullTeensyUpdatePath + "\\teensy_post_compile.exe" + "\"";
                 proc1.Arguments = anyCommand;
-                //proc1.WindowStyle = ProcessWindowStyle.Hidden;
+                proc1.WindowStyle = ProcessWindowStyle.Hidden;
                 Log.Instance.log("RunTeensyUpdater : " + proc1.FileName, LogSeverity.Debug);
                 Log.Instance.log("RunTeensyUpdater : " + anyCommand, LogSeverity.Debug);
             }
@@ -135,7 +138,6 @@ namespace MobiFlight
                 //    proc1.WindowStyle = ProcessWindowStyle.Hidden;
                 Log.Instance.log("RunBluePillUpdater : " + proc1.FileName, LogSeverity.Debug);
                 Log.Instance.log("RunBluePillUpdater : " + anyCommand, LogSeverity.Debug);
-
                 return;              // Flash Commands to be added
             }
             else
