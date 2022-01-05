@@ -80,7 +80,8 @@ namespace MobiFlight
             SetLcdDisplayI2C,       // 25
             SetModuleBrightness,    // 26,
             SetShiftRegisterPins,   // 27
-            AnalogChange            // 28           
+            AnalogChange,           // 28           
+            DebugPrint=0xFF         // 255 for Debug Print to Terminal Window
         };
 
         public delegate void InputDeviceEventHandler(object sender, InputEventArgs e);
@@ -443,7 +444,7 @@ namespace MobiFlight
             _cmdMessenger.Attach((int)Command.EncoderChange, OnEncoderChange);
             _cmdMessenger.Attach((int)Command.ButtonChange, OnButtonChange);
             _cmdMessenger.Attach((int)Command.AnalogChange, OnAnalogChange);
-
+            _cmdMessenger.Attach((int)Command.DebugPrint, OnDebugPrint);
         }
 
         /// Executes when an unknown command has been received.
@@ -504,14 +505,23 @@ namespace MobiFlight
                 OnInputDeviceAction(this, new InputEventArgs() { Serial = this.Serial, DeviceId = name, Type = DeviceType.AnalogInput, Value = int.Parse(value) });
          }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="port">the virtual port on the board or extension</param>
-    /// <param name="pin"></param>
-    /// <param name="value"></param>
-    /// <returns></returns>
-    public bool SetPin(string port, string pin, int value)
+        // Callback function that prints the Arduino Debug Print to the console
+        void OnDebugPrint(ReceivedCommand arguments)
+        {
+            String name = arguments.ReadStringArg();
+            String value1 = arguments.ReadStringArg();
+            String value2 = arguments.ReadStringArg();
+            Log.Instance.log("FW Debug -> " + name + " - " + value1 + " - " + value2, LogSeverity.Debug);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="port">the virtual port on the board or extension</param>
+        /// <param name="pin"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public bool SetPin(string port, string pin, int value)
         {
             // if value has not changed since the last time, then we continue to next item to prevent 
             // unnecessary communication with Arcaze USB
