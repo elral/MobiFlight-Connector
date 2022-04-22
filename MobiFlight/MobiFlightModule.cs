@@ -561,23 +561,6 @@ namespace MobiFlight
         /// <param name="value"></param>
         /// <returns></returns>
         public bool SetPin(string port, string pin, int value)
-        // Callback function that prints the Arduino Debug Print to the console
-        void OnDebugPrint(ReceivedCommand arguments)
-        {
-            String name = arguments.ReadStringArg();
-            String value1 = arguments.ReadStringArg();
-            String value2 = arguments.ReadStringArg();
-            Log.Instance.log("FW Debug -> " + name + " - " + value1 + " - " + value2, LogSeverity.Debug);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="port">the virtual port on the board or extension</param>
-        /// <param name="pin"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public bool SetPin(string port, string pin, int value)
         {
             // if value has not changed since the last time, then we continue to next item to prevent 
             // unnecessary communication with Arcaze USB
@@ -593,6 +576,14 @@ namespace MobiFlight
             outputs[pin].Set(value);
 
             return true;
+        }
+        // Callback function that prints the Arduino Debug Print to the console
+        void OnDebugPrint(ReceivedCommand arguments)
+        {
+            String name = arguments.ReadStringArg();
+            String value1 = arguments.ReadStringArg();
+            String value2 = arguments.ReadStringArg();
+            Log.Instance.log("FW Debug -> " + name + " - " + value1 + " - " + value2, LogSeverity.Debug);
         }
 
         public bool SetDisplay(string name, int module, byte points, byte mask, string value)
