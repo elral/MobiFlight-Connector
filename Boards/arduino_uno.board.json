@@ -34,7 +34,7 @@
     "MaxServos": 2,
     "MaxShifters": 2,
     "MaxSteppers": 2,
-    "MaxDigInputMuxes": 1,
+    "MaxDigInputMuxes": 1
   },
   "Pins": [
     {

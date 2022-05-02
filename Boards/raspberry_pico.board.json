@@ -16,7 +16,9 @@
       "ForceResetOnFirmwareUpdate": true,
       "MessageSize": 64
     },
-    "HardwareIds": ["^VID_2E8A&PID_000A"],
+    "HardwareIds": [
+      "^VID_2E8A&PID_000A"
+    ],
     "Info": {
       "CanInstallFirmware": true,
       "FriendlyName": "RaspiPico",
@@ -24,14 +26,17 @@
       "MobiFlightType": "MobiFlight RaspiPico"
     },
     "ModuleLimits": {
-      "MaxAnalogInputs": 3,
-      "MaxButtons": 26,
-      "MaxEncoders": 12,
+      "MaxAnalogInputs": 16,
+      "MaxInputShifters": 4,
+      "MaxButtons": 68,
+      "MaxEncoders": 20,
       "MaxLcdI2C": 2,
-      "MaxLedSegments": 2,
-      "MaxOutputs": 15,
-      "MaxServos": 4,
-      "MaxSteppers": 4
+      "MaxLedSegments": 4,
+      "MaxOutputs": 40,
+      "MaxServos": 10,
+      "MaxShifters": 4,
+      "MaxSteppers": 10,
+      "MaxDigInputMuxes": 2
     },
     "Pins": [
       {
