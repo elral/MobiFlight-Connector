@@ -15,7 +15,8 @@ namespace MobiFlight
         Debug = 0,
         Info = 1,
         Warn = 2,
-        Error = 3
+        Error = 3,
+        Firmware = 4
     }
 
     public sealed class Log
