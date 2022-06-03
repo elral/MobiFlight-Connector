@@ -807,6 +807,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Boards\mfboard.schema.json" />
+    <None Include="Boards\raspberry_pico.board.json" />
+    <None Include="Boards\teensy35.board.json" />
+    <None Include="Boards\teensy41.board.json" />
     <None Include="Build\build-firmware.bat" />
     <None Include="Build\release.bat" />
     <None Include="examples\example-default-plane-v6.1.mcc">
