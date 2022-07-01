@@ -830,6 +830,17 @@
     <Compile Include="xplane\XplaneCacheInterface.cs" />
     <Compile Include="xplane\XplaneCache.cs" />
     <Compile Include="xplane\XplaneDataRef.cs" />
+    <Content Include="Teensy\tools\mktinyfat.exe" />
+    <Content Include="Teensy\tools\precompile_helper.exe" />
+    <Content Include="Teensy\tools\stdout_redirect.exe" />
+    <Content Include="Teensy\tools\teensy.exe" />
+    <Content Include="Teensy\tools\teensy_gateway.exe" />
+    <Content Include="Teensy\tools\teensy_loader_cli.exe" />
+    <Content Include="Teensy\tools\teensy_ports.exe" />
+    <Content Include="Teensy\tools\teensy_post_compile.exe" />
+    <Content Include="Teensy\tools\teensy_reboot.exe" />
+    <Content Include="Teensy\tools\teensy_restart.exe" />
+    <Content Include="Teensy\tools\teensy_serialmon.exe" />
     <None Include="ApplicationInsights.config" />
     <None Include="Boards\arduino_mega.board.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -864,6 +875,15 @@
     <None Include="examples\tutorial-episode2.mcc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="firmware\Flash-Mega.bat" />
+    <None Include="firmware\Flash-Micro.bat" />
+    <None Include="firmware\Flash-Mini.bat" />
+    <None Include="firmware\Flash-Nano.bat" />
+    <None Include="firmware\Flash-Nano_old.bat" />
+    <None Include="firmware\Flash-Raspi.bat" />
+    <None Include="firmware\Flash-Teensy35.bat" />
+    <None Include="firmware\Flash-Teensy41.bat" />
+    <None Include="firmware\Flash-Uno.bat" />
     <None Include="firmware\mobiflight_mega_2_2_0.hex">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -901,10 +921,14 @@
     <None Include="Presets\msfs2020_hubhop_presets.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="RaspberryPico\tools\package.json" />
     <None Include="Resources\arcaze-module.png" />
     <None Include="Resources\arcaze-new.png" />
     <None Include="Resources\arcaze-changed.png" />
     <Content Include="mobiflight.ico" />
+    <Content Include="RaspberryPico\tools\elf2uf2.exe" />
+    <Content Include="RaspberryPico\tools\picotool.exe" />
+    <Content Include="RaspberryPico\tools\rp2040load.exe" />
     <Content Include="Resources\button.png" />
     <Content Include="Resources\discord_icon.png" />
     <Content Include="Resources\encoder.png" />
@@ -1383,6 +1407,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Teensy\tools\.piopm" />
+    <None Include="Teensy\tools\package.json" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
