@@ -36,7 +36,7 @@
       "MaxServos": 10,
       "MaxShifters": 4,
       "MaxSteppers": 10,
-      "MaxDigInputMuxes": 2
+      "MaxInputMultiplexer": 2
     },
     "Pins": [
       {
@@ -146,18 +146,6 @@
         "isI2C": false,
         "isPWM": true,
         "Pin": 17
-      },
-      {
-        "isAnalog": false,
-        "isI2C": false,
-        "isPWM": true,
-        "Pin": 18
-      },
-      {
-        "isAnalog": false,
-        "isI2C": false,
-        "isPWM": true,
-        "Pin": 19
       },
       {
         "isAnalog": false,
