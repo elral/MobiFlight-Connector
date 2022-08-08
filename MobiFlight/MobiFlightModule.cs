@@ -587,14 +587,6 @@ namespace MobiFlight
 
             return true;
         }
-        // Callback function that prints the Arduino Debug Print to the console
-        void OnDebugPrint(ReceivedCommand arguments)
-        {
-            String name = arguments.ReadStringArg();
-            String value1 = arguments.ReadStringArg();
-            String value2 = arguments.ReadStringArg();
-            Log.Instance.log("FW Debug -> " + name + " - " + value1 + " - " + value2, LogSeverity.Debug);
-        }
 
         public bool SetDisplay(string name, int module, byte points, byte mask, string value)
         {
