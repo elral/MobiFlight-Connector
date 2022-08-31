@@ -16,9 +16,7 @@
       "ForceResetOnFirmwareUpdate": true,
       "MessageSize": 64
     },
-    "HardwareIds": [
-      "^VID_2E8A&PID_000A"
-    ],
+    "HardwareIds": ["^VID_2E8A&PID_000A"],
     "Info": {
       "CanInstallFirmware": true,
       "FriendlyName": "RaspiPico",
@@ -146,6 +144,18 @@
         "isI2C": false,
         "isPWM": true,
         "Pin": 17
+      },
+      {
+        "isAnalog": false,
+        "isI2C": false,
+        "isPWM": true,
+        "Pin": 18
+      },
+      {
+        "isAnalog": false,
+        "isI2C": false,
+        "isPWM": true,
+        "Pin": 19
       },
       {
         "isAnalog": false,
