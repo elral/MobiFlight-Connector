@@ -13,6 +13,7 @@ using MobiFlight.Config;
 using MobiFlight.OutputConfig;
 using MobiFlight.InputConfig;
 using MobiFlight.xplane;
+using System.Globalization;
 
 namespace MobiFlight
 {
@@ -1356,7 +1357,7 @@ namespace MobiFlight
             	if (inputCache[inputKey].Count == 0)
             	{
                 	if (LogIfNotJoystickOrJoystickAxisEnabled(e.Serial, e.Type))
-                    	    Log.Instance.log($"No config found for {e.Type}: {e.DeviceId}{(e.ExtPin.HasValue ? $":{e.ExtPin}" : "")} ({eventAction})@{e.Serial}", LogSeverity.Debug);
+                    	    Log.Instance.log($"No config found for {msgEventLabel}", LogSeverity.Debug);
                 	return;
             	}
             }
@@ -1364,7 +1365,13 @@ namespace MobiFlight
             Log.Instance.log($"Config found for {e.Type}: {e.DeviceId}{(e.ExtPin.HasValue ? $":{e.ExtPin}" : "")} ({eventAction})@{e.Serial}", LogSeverity.Debug);
 
             // Skip execution if not started
-            if (!IsStarted()) return;
+            if (!IsStarted())
+            {
+                Log.Instance.log($"Config found for {msgEventLabel} (!) Not sent, MobiFlight not running", LogSeverity.Warn);
+                return;
+            }
+
+            Log.Instance.log($"Config found for {msgEventLabel}", LogSeverity.Debug);
 
             ConnectorValue currentValue = new ConnectorValue();
             CacheCollection cacheCollection = new CacheCollection()

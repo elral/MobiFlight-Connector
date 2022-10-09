@@ -894,13 +894,13 @@
     <None Include="firmware\Flash-Teensy35.bat" />
     <None Include="firmware\Flash-Teensy41.bat" />
     <None Include="firmware\Flash-Uno.bat" />
-    <None Include="firmware\mobiflight_mega_2_2_0.hex">
+    <None Include="firmware\mobiflight_mega_2_2_2.hex">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="firmware\mobiflight_micro_2_2_0.hex">
+    <None Include="firmware\mobiflight_micro_2_2_2.hex">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="firmware\mobiflight_uno_2_2_0.hex">
+    <None Include="firmware\mobiflight_uno_2_2_2.hex">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Presets\msfs2020_simvars.cip">
@@ -1123,6 +1123,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Panels\OutputConfigPanel.de.resx">
       <DependentUpon>OutputConfigPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Panels\OutputConfigPanel.resx">
       <DependentUpon>OutputConfigPanel.cs</DependentUpon>

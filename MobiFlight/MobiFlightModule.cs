@@ -191,6 +191,7 @@ namespace MobiFlight
         }
 
         public const int CommandTimeout = 2500;
+        public const int MessageSizeReductionValue = 10;
 
         const int KeepAliveIntervalInMinutes = 5; // 5 Minutes
         DateTime lastUpdate = new DateTime();
@@ -257,8 +258,7 @@ namespace MobiFlight
                 CurrentSerialSettings = { PortName = _comPort, BaudRate = baudRate, DtrEnable = Board.Connection.DtrEnable } // object initializer
             };
 
-            // _cmdMessenger = new CmdMessenger(_transportLayer, ',', ';', '\\', Board.Connection.MessageSize)
-            _cmdMessenger = new CmdMessenger(_transportLayer, BoardType.Bit16);
+            _cmdMessenger = new CmdMessenger(_transportLayer, BoardType.Bit16, ',', ';', '\\', Board.Connection.MessageSize);
 
             // Attach the callbacks to the Command Messenger
             AttachCommandCallBacks();
@@ -770,7 +770,7 @@ namespace MobiFlight
             Log.Instance.log("Reset config: " + (int)MobiFlightModule.Command.ResetConfig, LogSeverity.Debug);
             _cmdMessenger.SendCommand(command);
 
-            foreach (string MessagePart in this.Config.ToInternal(this.Board.Connection.MessageSize))
+            foreach (string MessagePart in this.Config.ToInternal(this.Board.Connection.MessageSize - MessageSizeReductionValue))
             {
                 Log.Instance.log("Uploading config (Part): " + MessagePart, LogSeverity.Debug);
                 command = new SendCommand((int)MobiFlightModule.Command.SetConfig, (int)MobiFlightModule.Command.Status, CommandTimeout);
