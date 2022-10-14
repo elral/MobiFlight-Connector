@@ -34,6 +34,30 @@ namespace MobiFlight
 
         public static bool Update(MobiFlightModule module)
         {
+            if (module.Board.AvrDudeSettings == null)
+            {
+                Log.Instance.log($"Firmware update requested for {module.Board.Info.MobiFlightType} ({module.Port}) however no update settings were specified in the board definition file. Module update skipped.", LogSeverity.Warn);
+                return false;
+            }
+
+            var FirmwareName = module.Board.AvrDudeSettings.GetFirmwareName(module.Board.Info.LatestFirmwareVersion);
+            return UpdateFirmware(module, FirmwareName);
+        }
+
+        public static bool Reset(MobiFlightModule module)
+        {
+            if (module.Board.AvrDudeSettings == null)
+            {
+                Log.Instance.log($"Firmware reset requested for {module.Board.Info.MobiFlightType} ({module.Port}) however no reset settings were specified in the board definition file. Module reset skipped.", LogSeverity.Warn);
+                return false;
+            }
+
+            var FirmwareName = module.Board.AvrDudeSettings.ResetFirmwareFile;
+            return UpdateFirmware(module, FirmwareName);
+        }
+
+        public static bool UpdateFirmware(MobiFlightModule module, String FirmwareName)
+        {
             bool result = false;
             String Port = module.InitUploadAndReturnUploadPort();
             if (module.Connected) module.Disconnect();
@@ -54,7 +78,7 @@ namespace MobiFlight
             if (module.Board.AvrDudeSettings != null)
             {
                 try {
-                    RunAvrDude(Port, module.Board);
+                    RunAvrDude(Port, module.Board, FirmwareName);
                     result = true;
                 } catch(Exception e) {
                     result = false;
@@ -71,9 +95,9 @@ namespace MobiFlight
             return result;
         }
 
-        public static void RunAvrDude(String Port, Board board) 
+        public static void RunAvrDude(String Port, Board board, String FirmwareName) 
         {
-            String FirmwareName = board.AvrDudeSettings.GetFirmwareName(board.Info.LatestFirmwareVersion);
+            //String FirmwareName = board.AvrDudeSettings.GetFirmwareName(board.Info.LatestFirmwareVersion);
             if (board.Info.MobiFlightType == "MobiFlight RaspiPico")
             {
                 FirmwareName = FirmwareName + ".elf";
