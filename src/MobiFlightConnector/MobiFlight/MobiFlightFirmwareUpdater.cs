@@ -42,6 +42,15 @@ namespace MobiFlight
                 return false;
             }
 
+            String message = "";
+            var FullFirmwarePath = Path.Combine(Directory.GetCurrentDirectory(), module.Board.BasePath, "firmware", firmwareName);
+            if (!IsValidFirmwareFilepath(FullFirmwarePath))
+            {
+                message = $"Firmware not found: {FullFirmwarePath}";
+                Log.Instance.log(message, LogSeverity.Error);
+                throw new FileNotFoundException(message);
+            }
+
             return UpdateFirmware(module, firmwareName);
         }
 
