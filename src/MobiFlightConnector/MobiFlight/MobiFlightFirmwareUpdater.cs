@@ -42,11 +42,10 @@ namespace MobiFlight
                 return false;
             }
 
-            String message = "";
             var FullFirmwarePath = Path.Combine(Directory.GetCurrentDirectory(), module.Board.BasePath, "firmware", firmwareName);
             if (!IsValidFirmwareFilepath(FullFirmwarePath))
             {
-                message = $"Firmware not found: {FullFirmwarePath}";
+                String message = $"Firmware not found: {FullFirmwarePath}";
                 Log.Instance.log(message, LogSeverity.Error);
                 throw new FileNotFoundException(message);
             }
@@ -191,14 +190,14 @@ namespace MobiFlight
         {
             String message = "";
             DriveInfo driveInfo;
-
+/*
             if (!IsValidFirmwareFilepath(fullFirmwarePath))
             {
                 message = $"Firmware not found: {fullFirmwarePath}";
                 Log.Instance.log(message, LogSeverity.Error);
                 throw new FileNotFoundException(message);
             }
-
+*/
             // Flashing can be initiated with either a COM port (for devices that weren't in bootsel mode to begin with
             // and got in that state by having the COM port toggled) or with a drive letter (for devices that were already
             // in bootsel mode when MobiFlight ran.
